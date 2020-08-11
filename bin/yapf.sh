@@ -7,9 +7,10 @@ set -e
 # workaround to allow GitHub Desktop to work, add this (hopefully harmless) setting here.
 export PATH=$PATH:/usr/local/bin
 
-for dir in $(echo "$@" | xargs -n1 dirname | sort -u | uniq); do
-  pushd "$dir" >/dev/null
-  terraform init -backend=false
-  terraform validate
-  popd >/dev/null
+readonly STYLE="{BASED_ON_STYLE: google, ALIGN_CLOSING_BRACKET_WITH_VISUAL_INDENT: true, COLUMN_LIMIT: 120, BLANK_LINE_BEFORE_NESTED_CLASS_OR_DEF: true, COALESCE_BRACKETS: false, DEDENT_CLOSING_BRACKETS: true, SPLIT_BEFORE_DOT: true, SPLIT_COMPLEX_COMPREHENSION: true}"
+
+for file in "$@"; do
+  if [[ "$file" =~ \.py$ ]]; then
+    yapf -ri --style="$STYLE" "$file"
+  fi
 done

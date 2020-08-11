@@ -7,9 +7,6 @@ set -e
 # workaround to allow GitHub Desktop to work, add this (hopefully harmless) setting here.
 export PATH=$PATH:/usr/local/bin
 
-for dir in $(echo "$@" | xargs -n1 dirname | sort -u | uniq); do
-  pushd "$dir" >/dev/null
-  terraform init -backend=false
-  terraform validate
-  popd >/dev/null
+for file in "$@"; do
+  tflint $file
 done
