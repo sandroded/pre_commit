@@ -1,0 +1,9 @@
+prerequesites:
+
+* shellcheck
+* yapf
+brew tap liamg/tfsec
+brew install pre-commit gawk terraform-docs tflint tfsec coreutils
+terraform-docs
+This hook modifies files in the commit: createds variables.doc and the status will be failed. Please review created document and run again. 
+The reason can be found here: https://github.com/pre-commit/pre-commit/issues/532
